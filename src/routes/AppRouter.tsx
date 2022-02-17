@@ -12,7 +12,7 @@ interface IProps {
 const AppRouter = ({ isLoggedIn, user }: IProps) => {
   return (
     <Routes>
-      <Route path="/admin" element={<AdminRouter isLoggedIn={isLoggedIn} user={user} />} />
+      <Route path="/admin/*" element={<AdminRouter isLoggedIn={isLoggedIn} user={user} />} />
       <Route path="/" element={<Home />} />
     </Routes>
   );
