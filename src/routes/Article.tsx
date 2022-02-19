@@ -24,6 +24,7 @@ const Article = ({}) => {
         title: title,
         subTitle: subTitle,
         content: content,
+        created_at: Date.now(),
         storage_path: storagePath,
         thumbnail_url: downloadUrl,
       });
@@ -115,6 +116,10 @@ const Article = ({}) => {
         />
       </div>
       <img src={file} />
+      <div>
+        <label htmlFor="youtube-url">유튜브 URL</label>
+        <input id="youtube-url" type="url" name="youtube-url" onChange={handleChange} />
+      </div>
       {/* thumbnail image upload */}
       {/* youtube url */}
       {/* tag list */}

@@ -1,11 +1,13 @@
 import { getAuth } from 'firebase/auth';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs, limit } from 'firebase/firestore';
 
 const db = getFirestore();
 
 const Admin = () => {
+  const [articles, setArticles] = useState<any>();
+
   const auth = getAuth();
 
   async function handleSignOut() {
@@ -13,17 +15,16 @@ const Admin = () => {
   }
 
   async function getInit() {
-    const q = query(collection(db, 'articles'));
+    const q = query(collection(db, 'articles'), limit(1));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, ' => ', doc.data());
-    });
+    console.log(querySnapshot.docs);
+    setArticles(querySnapshot);
   }
 
   useEffect(() => {
     getInit();
-  });
+    // setArticles([1, 2, 3, 4]);
+  }, []);
 
   return (
     <div>
@@ -32,6 +33,18 @@ const Admin = () => {
       <button type="button" onClick={handleSignOut}>
         로그아웃
       </button>
+      {articles ? (
+        <div>
+          {articles.forEach((doc: any) => {
+            console.log(doc);
+            // console.log(doc.id, ' => ', doc.data());
+            return <span>hello</span>;
+          })}
+          <span>hello</span>
+        </div>
+      ) : (
+        <span>loading...</span>
+      )}
     </div>
   );
 };
